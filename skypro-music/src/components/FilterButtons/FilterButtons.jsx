@@ -32,14 +32,14 @@ const FilterButtons = () => {
           исполнителю
           <div className="filter__box filter__box-author ">
             <ul className="filter__list">
-              <li className="filter__item">Исполнитель 1</li>
-              <li className="filter__item">Исполнитель 2</li>
-              <li className="filter__item">Исполнитель 3</li>
-              <li className="filter__item">Исполнитель 4</li>
-              <li className="filter__item">Исполнитель 5</li>
-              <li className="filter__item">Исполнитель 6</li>
-              <li className="filter__item">Исполнитель 7</li>
-              <li className="filter__item">Исполнитель 8</li>
+              <li className="filter__item">Nero</li>
+              <li className="filter__item">Calvin Harris</li>
+              <li className="filter__item">Dynoro</li>
+              <li className="filter__item">Ali Bakgor</li>
+              <li className="filter__item">Psy</li>
+              <li className="filter__item">Jaded</li>
+              <li className="filter__item">Blue Foundation</li>
+              <li className="filter__item">Tom Boxer</li>
             </ul>
           </div>
         </div>
@@ -76,14 +76,14 @@ const FilterButtons = () => {
           жанру
           <div className="filter__box filter__box-genre">
             <ul className="filter__list">
-              <li className="filter__item">Жанр 1</li>
-              <li className="filter__item">Жанр 2</li>
-              <li className="filter__item">Жанр 3</li>
-              <li className="filter__item">Жанр 4</li>
-              <li className="filter__item">Жанр 5</li>
-              <li className="filter__item">Жанр 6</li>
-              <li className="filter__item">Жанр 7</li>
-              <li className="filter__item">Жанр 8</li>
+              <li className="filter__item">classic</li>
+              <li className="filter__item">rap</li>
+              <li className="filter__item">EDM</li>
+              <li className="filter__item">raggae</li>
+              <li className="filter__item">country</li>
+              <li className="filter__item">pop</li>
+              <li className="filter__item">hits</li>
+              <li className="filter__item">00 music</li>
             </ul>
           </div>
         </div>
