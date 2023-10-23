@@ -1,6 +1,5 @@
 import React from "react";
-import Track from "./Track";
-
+import Track from "../Track/Track";
 
 const TracksBlock = () => {
   return (
@@ -158,9 +157,7 @@ const TracksBlock = () => {
               <div className="track__title-text">
                 <a className="track__title-link" href="http://">
                   Eyes on Fire
-                  <span className="track__title-span">
-                    (Zeds Dead Remix)
-                  </span>
+                  <span className="track__title-span">(Zeds Dead Remix)</span>
                 </a>
               </div>
             </div>
@@ -193,9 +190,7 @@ const TracksBlock = () => {
               <div className="track__title-text">
                 <a className="track__title-link" href="http://">
                   Mucho Bien
-                  <span className="track__title-span">
-                    (Hi Profile Remix)
-                  </span>
+                  <span className="track__title-span">(Hi Profile Remix)</span>
                 </a>
               </div>
             </div>
@@ -546,4 +541,4 @@ const TracksBlock = () => {
   );
 };
 
-export default TracksBlock
+export default TracksBlock;
