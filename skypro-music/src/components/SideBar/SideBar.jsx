@@ -5,7 +5,7 @@ const SideBar = () => {
   return (
     <div className="main__sidebar sidebar">
       <div className="sidebar__personal">
-        <p className="sidebar__personal-name">Marina.Skorik</p>
+        <p className="sidebar__personal-name">Ekaterina Ford</p>
         <div className="sidebar__icon">
           <svg alt="logout">
             <use xlinkHref="img/icon/sprite.svg#logout" />

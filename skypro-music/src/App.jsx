@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import "./App.css";
 import AudioPlayer from "./components/AudioPlayer/AudioPlayer";
 import NavMenu from "./components/NavMenu/NavMenu";
-import TrackList from "./components/TrackList";
+import TrackList from "./components/TrackList/TrackList";
 import SideBar from "./components/SideBar/SideBar";
 import LoadingContext from './components/context';
 

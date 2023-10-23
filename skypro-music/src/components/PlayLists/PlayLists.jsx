@@ -1,7 +1,7 @@
 import React from "react";
 import PlayList from "../PlayList/PlayList";
 import { useContext } from 'react';
-import LoadingContext from '../contexxt';
+import LoadingContext from '../context';
 
 const PlayLists = () => {
     const { loading, setLoading } = useContext(LoadingContext)
