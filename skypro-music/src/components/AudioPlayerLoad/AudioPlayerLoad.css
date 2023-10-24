@@ -1,0 +1,14 @@
+
+.track-play__image-skeleton{
+    width: 51px;
+    height: 51px;
+    border-radius: 2px;
+    animation: pulsate-fwd 3s linear infinite both;
+  }
+  
+  .track-play-skeleton{
+    width: 51px;
+    height: 18px;
+    border-radius: 2px;
+    animation: pulsate-fwd 3s linear infinite both;
+  }

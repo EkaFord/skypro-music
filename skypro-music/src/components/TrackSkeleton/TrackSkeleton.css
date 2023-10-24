@@ -1,0 +1,33 @@
+.track__time-skeleton{
+    height: 24px;
+    width: 320px;
+    border-radius: 2px;
+    animation: pulsate-fwd 3s linear infinite both;
+  }
+  
+  .playlist__track-skeleton{
+    display: flex;
+    align-items: center;
+  }
+  
+  .track__album-skeleton {
+    height: 24px;
+    width: 300px;
+    animation: pulsate-fwd 3s linear infinite both;
+    margin-right: 35px;
+    border-radius: 2px;
+  }
+  
+  .track__author-skeleton{
+    height: 24px;
+    width: 321px;
+    margin-right: 63px;
+    border-radius: 2px;
+    animation: pulsate-fwd 3s linear infinite both;
+  
+  }
+  
+  .track__title-image-skeleton {
+    animation: pulsate-fwd 3s linear infinite both;
+    border-radius: 2px;
+  }
