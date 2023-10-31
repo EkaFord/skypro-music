@@ -1,14 +1,16 @@
 import React from "react";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
+import * as S from "./NavMenuStyles"
+
 
 const NavMenu = () => {
   return (
-<nav className="main__nav nav">
-      <div className="nav__logo logo">
-        <img className="logo__image" src="img/logo.png" alt="logo" />
-      </div>
+    <S.MainNav>
+      < S.NavLogo >
+        <S.LogoImage src="img/logo.png" alt="logo"/>
+      </ S.NavLogo>
       <BurgerMenu />
-    </nav>
+    </S.MainNav>
   );
 };
 

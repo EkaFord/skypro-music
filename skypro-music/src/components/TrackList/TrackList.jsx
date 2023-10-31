@@ -1,29 +1,30 @@
 import React from "react";
 import TracksBlock from "../TracksBlock/TracksBlock";
 import FilterButtons from "../FilterButtons/FilterButtons";
+import * as S from "./TrackListStyles"
+
 
 const TrackList = () => {
   return (
-    <div className="main__centerblock centerblock">
-      <div className="centerblock__search search">
-        <svg className="search__svg">
+    <S.MainCenterblock>
+      <S.CenterblockSearch>
+        <S.SearchSvg>
           <use xlinkHref="img/icon/sprite.svg#icon-search" />
-        </svg>
-        <input
-          className="search__text"
+        </S.SearchSvg>
+        <S.SearchText
           type="search"
           placeholder="Поиск"
           name="search"
         />
-      </div>
-      <h2 className="centerblock__h2">Треки</h2>
-      <div className="centerblock__filter filter">
-        <div className="filter__title">Искать по:</div>
+      </S.CenterblockSearch>
+      <S.CenterblockH2>Треки</S.CenterblockH2>
+      <S.CenterblockFilter>
+        <S.FilterTitle>Искать по:</S.FilterTitle>
         <FilterButtons />
-      </div>
+      </S.CenterblockFilter>
       <TracksBlock />
-    </div>
+    </S.MainCenterblock>
   );
 };
 
-export default TrackList;
+export default TrackList
