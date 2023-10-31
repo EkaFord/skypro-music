@@ -1,46 +1,18 @@
 import React from "react";
-import * as S from "./BurgerMenuStyles"
-
-const { useState } = React;
+import * as S from "../AudioPlayer/AudioPlayerStyles.jsx"
 
 
-
-const BurgerMenu = () => {
-  const [visible, setVisible] = useState(false);
-
-  const toggleVisibility = () => setVisible(!visible);
-
+const AudioPlayerLoad = () => {
   return (
-    <>
-      <S.NavBurger onClick={toggleVisibility}>
-        <S.BurgerLine />
-        <S.BurgerLine />
-        <S.BurgerLine />
-      </S.NavBurger>
-      {visible && (
-        <S.NavMenu>
-          <S.MenuList>
-            <S.MenuItem>
-              <S.MenuLink href="#">
-                Главное
-              </S.MenuLink>
-            </S.MenuItem>
-            <S.MenuItem>
-              <S.MenuLink href="#">
-                Мой плейлист
-              </S.MenuLink>
-            </S.MenuItem>
-            <S.MenuItem>
-              <S.MenuLink href="../signin.html">
-                Войти
-              </S.MenuLink>
-            </S.MenuItem>
-          </S.MenuList>
-        </S.NavMenu>
-      )}
-    </>
+    <S.TrackPlayContain>
+      <S.TrackPlayImageSkeleton>
+      </S.TrackPlayImageSkeleton>
+      <S.TrackPlaySkeleton>
+      </S.TrackPlaySkeleton>
+      <S.TrackPlaySkeleton>
+      </S.TrackPlaySkeleton>
+    </S.TrackPlayContain>
   );
 };
 
-export default BurgerMenu;
-
+export default AudioPlayerLoad;
