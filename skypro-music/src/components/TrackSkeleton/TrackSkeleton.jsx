@@ -1,16 +1,18 @@
 import React from "react";
+import * as S from "./TrackSkeletonStyles"
+
 
 const TrackSkeleton = () => {
-    return (
-        <div className="playlist__item">
-        <div className="playlist__track-skeleton track">
-          <div className="track__title-image track__title-image-skeleton"></div>
-          <div className="track__author-skeleton"></div>
-          <div className="track__album-skeleton"></div>
-          <div className="track__time-skeleton"></div>
-        </div>
-      </div>  
-    );
+  return (
+    <S.PlaylistItemSkeleton>
+      <S.PlaylistTrackSkeleton>
+        <S.TrackTitleImageSkeleton></S.TrackTitleImageSkeleton>
+        <S.TrackAuthorSkeleton></S.TrackAuthorSkeleton>
+        <S.TrackAlbumSkeleton></S.TrackAlbumSkeleton>
+        <S.TrackTimeSkeleton></S.TrackTimeSkeleton>
+      </S.PlaylistTrackSkeleton>
+    </S.PlaylistItemSkeleton>
+  );
 };
 
 export default TrackSkeleton

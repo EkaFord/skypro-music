@@ -1,18 +1,18 @@
 import React from "react";
+import * as S from "../AudioPlayer/AudioPlayerStyles.js"
+
 
 const AudioPlayerLoad = () => {
-    return (
-        <div className="track-play__contain">
-        <div className="track-play__image track-play__image-skeleton">
-        </div>
-        <div className="track-play-skeleton">
-        </div>
-        <div className="track-play-skeleton">
-        </div>
-      </div>
-  
-    );
-  };
-  
-  export default AudioPlayerLoad;
+  return (
+    <S.TrackPlayContain>
+      <S.TrackPlayImageSkeleton>
+      </S.TrackPlayImageSkeleton>
+      <S.TrackPlaySkeleton>
+      </S.TrackPlaySkeleton>
+      <S.TrackPlaySkeleton>
+      </S.TrackPlaySkeleton>
+    </S.TrackPlayContain>
+  );
+};
 
+export default AudioPlayerLoad;

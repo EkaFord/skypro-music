@@ -1,41 +1,45 @@
 import React from "react";
+import * as S from "./BurgerMenuStyles"
+
 const { useState } = React;
 
+
+
 const BurgerMenu = () => {
-    const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-    const toggleVisibility = () => setVisible(!visible);
+  const toggleVisibility = () => setVisible(!visible);
 
-    return (
-        <>
-        <div onClick={toggleVisibility} className="nav__burger burger">
-          <span className="burger__line" />
-          <span className="burger__line" />
-          <span className="burger__line" />
-        </div>
-        {visible && (
-          <div className="nav__menu menu">
-            <ul className="menu__list">
-              <li className="menu__item">
-                <a href="#" className="menu__link">
-                  Главное
-                </a>
-              </li>
-              <li className="menu__item">
-                <a href="#" className="menu__link">
-                  Мой плейлист
-                </a>
-              </li>
-              <li className="menu__item">
-                <a href="../signin.html" className="menu__link">
-                  Войти
-                </a>
-              </li>
-            </ul>
-          </div>
-        )}
-      </>
-    );
-  };
-  
-  export default BurgerMenu;
+  return (
+    <>
+      <S.NavBurger onClick={toggleVisibility}>
+        <S.BurgerLine />
+        <S.BurgerLine />
+        <S.BurgerLine />
+      </S.NavBurger>
+      {visible && (
+        <S.NavMenu>
+          <S.MenuList>
+            <S.MenuItem>
+              <S.MenuLink href="#">
+                Главное
+              </S.MenuLink>
+            </S.MenuItem>
+            <S.MenuItem>
+              <S.MenuLink href="#">
+                Мой плейлист
+              </S.MenuLink>
+            </S.MenuItem>
+            <S.MenuItem>
+              <S.MenuLink href="../signin.html">
+                Войти
+              </S.MenuLink>
+            </S.MenuItem>
+          </S.MenuList>
+        </S.NavMenu>
+      )}
+    </>
+  );
+};
+
+export default BurgerMenu;
