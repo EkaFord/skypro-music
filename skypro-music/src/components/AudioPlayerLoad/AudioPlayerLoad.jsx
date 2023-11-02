@@ -1,5 +1,5 @@
 import React from "react";
-import * as S from "../AudioPlayer/AudioPlayerStyles.jsx"
+import * as S from "../AudioPlayer/AudioPlayerStyles.js"
 
 
 const AudioPlayerLoad = () => {
