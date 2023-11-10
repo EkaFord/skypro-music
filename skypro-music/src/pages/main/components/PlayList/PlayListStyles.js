@@ -1,4 +1,6 @@
 import styled, { keyframes } from 'styled-components'
+import { Link } from "react-router-dom";
+
 
 const SkeletonAnim = keyframes`
     0%   {
@@ -20,7 +22,7 @@ export const SidebarItem = styled.div`
   }
 `
 
-export const SidebarLink = styled.a`
+export const SidebarLink = styled(Link)`
   width: 100%;
   height: 100%;
 `
@@ -29,15 +31,8 @@ export const SidebarImg = styled.img`
   height: auto;
 `
 export const SidebarList = styled.div`
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
 `
 
