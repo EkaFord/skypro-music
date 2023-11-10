@@ -1,18 +1,13 @@
 import styled from 'styled-components'
+import { Link } from "react-router-dom";
+
 
 export const NavBurger = styled.div`
   width: 20px;
   height: 36px;
   padding: 13px 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
   justify-content: space-between;
 `
 
@@ -33,7 +28,7 @@ export const MenuItem = styled.li`
   padding: 5px 0;
   margin-bottom: 16px;
 `
-export const MenuLink = styled.a`
+export const MenuLink = styled(Link)`
   color: #ffffff;
   font-weight: 400;
   font-size: 16px;
