@@ -1,14 +1,10 @@
 import React from "react";
 import Track from "../Track/Track";
-import TrackSkeleton from "../TrackSkeleton/TrackSkeleton";
-import { useContext } from 'react';
-import LoadingContext from '../context';
 import * as S from "./TracksBlockStyles"
 
 
 const TracksBlock = () => {
 
-  const { loading, setLoading } = useContext(LoadingContext)
 
   return (
     <S.CenterblockContent>
@@ -23,23 +19,7 @@ const TracksBlock = () => {
         </S.Col04>
       </S.ContentTitle>
       <S.ContentPlaylist>
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
-        {loading ? <TrackSkeleton /> : <Track />}
+        <Track/>
       </S.ContentPlaylist>
     </S.CenterblockContent>
   );
