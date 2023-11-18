@@ -3,7 +3,6 @@ import AudioPlayerLoad from "../AudioPlayerLoad/AudioPlayerLoad";
 import { useContext, useState, useRef } from 'react';
 import LoadingContext from '../context';
 import * as S from "./AudioPlayerStyles"
-// import ProgressBar from "../ProgresState";
 
 
 const AudioPlayer = () => {
