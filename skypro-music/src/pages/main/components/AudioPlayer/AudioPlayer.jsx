@@ -2,7 +2,8 @@ import React, { useEffect, useContext, useState, useRef } from "react";
 import LoadingContext from '../context';
 import * as S from "./AudioPlayerStyles";
 import AudioPlayerLoad from "../AudioPlayerLoad/AudioPlayerLoad";
-import { ProgressInputTrack, ProgressInputVolume } from "../ProgressInputs/ProgressInput";
+import { ProgressInputTrack, ProgressInputVolume } from "../TracksProgress/TrackProgress";
+
 
 const AudioPlayer = () => {
   const { loading, currentTrack } = useContext(LoadingContext);
