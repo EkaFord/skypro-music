@@ -2,7 +2,7 @@ import React from "react";
 import * as S from "./ProgressInputStyles"
 import { forwardRef } from 'react';
 
-export const ProgresInputTrack = forwardRef((props, ref) => {
+export const ProgressInputTrack = forwardRef((props, ref) => {
 
   return (
     <S.ProgressInput
@@ -15,7 +15,7 @@ export const ProgresInputTrack = forwardRef((props, ref) => {
     />)
 });
 
-export const ProgresInputVolume = forwardRef((props, ref) => {
+export const ProgressInputVolume = forwardRef((props, ref) => {
   return (
     <S.ProgressInput
       type="range"
