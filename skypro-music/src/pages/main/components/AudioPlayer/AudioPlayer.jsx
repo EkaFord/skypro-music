@@ -1,53 +1,57 @@
-import React, { useEffect } from "react";
-import AudioPlayerLoad from "../AudioPlayerLoad/AudioPlayerLoad";
-import { useContext, useState, useRef } from 'react';
+import React, { useEffect, useContext, useState, useRef } from "react";
 import LoadingContext from '../context';
-import * as S from "./AudioPlayerStyles"
-
+import * as S from "./AudioPlayerStyles";
+import AudioPlayerLoad from "../AudioPlayerLoad/AudioPlayerLoad";
 
 const AudioPlayer = () => {
-
-  const { loading, currentTrack } = useContext(LoadingContext)
+  const { loading, currentTrack } = useContext(LoadingContext);
   const [isPlaying, setPlaying] = useState(false);
   const [isRepeat, setIsRepeat] = useState(false);
+  const [currentTime, setCurrentTime] = useState('0:00'); // Initial time format
 
-
-  const ref = useRef(0);
+  const ref = useRef(new Audio());
 
   const handleStart = () => {
     ref.current.play();
   };
 
-  useEffect(handleStart, [currentTrack])
-
-
-  const handleStop = () => {
+  const handleStop = () => { // Define handleStop function
     ref.current.pause();
+    setPlaying(false); // Update playing state
   };
 
-  function sToStr(s) {
-    let m = Math.trunc(s / 60) + ''
-    s = (s % 60) + ''
-    let sec = Math.floor(s.padStart(2, 0))
-    if (sec < 10) {
-      sec = `0` + Math.floor(s.padStart(2, 0))
-    }
-    return m.padStart(2, 0) + ':' + `${sec}`
-  }
+  useEffect(() => {
+    ref.current.src = currentTrack.track_file; // Update audio source
+    ref.current.load(); // Load the new audio source
+    ref.current.addEventListener('timeupdate', updateTime); // Listen to time updates
 
-  const [currentTime, setCurrentTime] = useState(0);
-  // const [currentTime, setCurrentTime] = useState(70);
+    return () => {
+      ref.current.removeEventListener('timeupdate', updateTime); // Cleanup on unmount
+    };
+  }, [currentTrack]);
+
+  const updateTime = () => {
+    const time = ref.current.currentTime;
+    setCurrentTime(sToStr(time));
+  };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(sToStr(ref.current.currentTime))
-    }, 1000);
-    return () => clearTimeout(interval);
-  }, [currentTrack])
+    if (isPlaying) {
+      handleStart();
+    } else {
+      handleStop(); // Use the defined handleStop function
+    }
+  }, [isPlaying]);
+
+  const sToStr = (s) => {
+    const minutes = Math.floor(s / 60);
+    const seconds = Math.floor(s % 60).toString().padStart(2, '0');
+    return `${minutes}:${seconds}`;
+  };
 
   const handleRepeat = () => {
     ref.current.loop = !isRepeat;
-    setIsRepeat(!isRepeat)
+    setIsRepeat(!isRepeat);
   };
 
   const awaitImplementation = () => {
@@ -58,13 +62,12 @@ const AudioPlayer = () => {
     <>
       <audio
         ref={ref}
-        controls="controls"
-        // {isRepeat ? loop = "loop" : null}
+        controls
         src={currentTrack.track_file}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
       ></audio>
-      <S.Bar>
+       <S.Bar>
         <S.BarContent>
           <S.TimeCode>{currentTime} / {sToStr(ref.current.duration)}</S.TimeCode>
           {/* <S.BarPlayerProgress></S.BarPlayerProgress> */}
