@@ -51,7 +51,7 @@ const AudioPlayer = () => {
   };
 
   const awaitImplementation = () => {
-    alert('Функционал еще не реализован');
+    alert('Functionality not implemented yet');
   };
 
   return (
