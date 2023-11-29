@@ -6,7 +6,7 @@ import NavMenu from "../components/NavMenu/NavMenu";
 import TrackList from "../components/TrackList/TrackList";
 import SideBar from "../components/SideBar/SideBar";
 import LoadingContext from '../components/context';
-import { getTodos } from "../../../api.js";
+import { getTodos } from "../../api.js";
 
 
 
