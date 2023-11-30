@@ -1,5 +1,4 @@
 import React from "react";
-// import * as S from "./PlayListStyles"
 
 
 export const Error = () => {

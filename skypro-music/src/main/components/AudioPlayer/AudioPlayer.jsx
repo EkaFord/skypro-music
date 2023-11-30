@@ -3,7 +3,8 @@ import AudioPlayerLoad from "../AudioPlayerLoad/AudioPlayerLoad";
 import { useContext, useState, useRef } from 'react';
 import LoadingContext from '../context';
 import * as S from "./AudioPlayerStyles"
-// import ProgressBar from "../ProgresState";
+//import ProgressBar from "../ProgressState";
+import { ProgressInputTrack, ProgressInputVolume } from "../ProgressInputs/ProgressInput";
 
 
 const AudioPlayer = () => {
@@ -27,21 +28,19 @@ const AudioPlayer = () => {
   };
 
   function sToStr(s) {
-    let m = Math.trunc(s / 60) + ''
-    s = (s % 60) + ''
-    let sec = Math.floor(s.padStart(2, 0))
-    if (sec < 10) {
-      sec = `0` + Math.floor(s.padStart(2, 0))
-    }
-    return m.padStart(2, 0) + ':' + `${sec}`
+    const minutes = Math.floor(s / 60);
+    const seconds = Math.floor(s % 60).toString().padStart(2, '0');
+    return `${String(minutes).padStart(2, '0')}:${seconds}`;
   }
+  
 
   const [currentTime, setCurrentTime] = useState(0);
-  // const [currentTime, setCurrentTime] = useState(70);
+  const [duration, setDuration] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(sToStr(ref.current.currentTime))
+      setDuration(sToStr(ref.current.duration))
     }, 1000);
     return () => clearTimeout(interval);
   }, [currentTrack])
@@ -52,35 +51,22 @@ const AudioPlayer = () => {
   };
 
   const awaitImplementation = () => {
-    alert('Not available yet');
+    alert('Functionality not implemented yet');
   };
 
   return (
     <>
       <audio
         ref={ref}
-        controls="controls"
-        // {isRepeat ? loop = "loop" : null}
         src={currentTrack.track_file}
+        controls="controls"
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
       ></audio>
       <S.Bar>
         <S.BarContent>
-          <S.TimeCode>{currentTime} / {sToStr(ref.current.duration)}</S.TimeCode>
-          {/* <S.BarPlayerProgress></S.BarPlayerProgress> */}
-          <S.StyledProgressInput
-            type="range"
-            min={0}
-            max={ref.current.duration}
-            value={currentTime}
-            step={0.01}
-            onChange={(a) => {
-              ref.current.currentTime = a.target.value;
-            }}
-            // onChange={(event) => setCurrentTime(event.target.value)}
-            color="#b672ff"
-          />
+          <S.TimeCode >{currentTime} / {duration}</S.TimeCode>
+          <ProgressInputTrack ref={ref} />
           <S.BarPlayerBlock>
             <S.BarPlayer>
               <S.PlayerControls>
@@ -175,10 +161,7 @@ const AudioPlayer = () => {
                   </S.VolumeSvg>
                 </S.VolumeImage>
                 <S.VolumeProgress>
-                  <S.VolumeProgressLine as="input"
-                    type="range"
-                    name="range"
-                  />
+                  <ProgressInputVolume ref={ref}/>
                 </S.VolumeProgress>
               </S.VolumeContent>
             </S.BarVolumeBlock>

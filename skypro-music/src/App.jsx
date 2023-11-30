@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import * as S from "./pages/main/components/mainStyles"
+import * as S from "./main/components/mainStyles"
 import { AppRoutes } from "./routes";
 import { useState } from "react";
 
