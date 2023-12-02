@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import * as S from "../login/LoginStyles"
 import { Link } from "react-router-dom";
 
@@ -15,4 +15,4 @@ export const Registration = () => {
       </Link>
     </S.LoginBox>
   );
-};
+};*/

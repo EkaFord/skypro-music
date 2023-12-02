@@ -1,7 +1,10 @@
-import { createGlobalStyle } from "styled-components";
-import * as S from "./components/components/mainStyles";
+import { createGlobalStyle } from 'styled-components';
+import * as S from "./pages/main/mainStyles"
 import { AppRoutes } from "./routes";
 import { useState } from "react";
+import Context from './contexts';
+import React from 'react';
+
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -35,8 +38,8 @@ const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: "StratosSkyeng";
     src: local("StratosSkyeng"), local("StratosSkyeng"),
-      url("./fonts/StratosSkyeng.woff2") format("woff2"),
-      url("./fonts/StratosSkyeng.woff") format("woff");
+      url("../public/fonts/StratosSkyeng.woff2") format("woff2"),
+      url("../public/fonts/StratosSkyeng.woff") format("woff");
     font-weight: 400;
     font-style: normal;
   }
@@ -48,24 +51,36 @@ const GlobalStyle = createGlobalStyle`
     font-family: "StratosSkyeng", sans-serif;
     color: #ffffff;
   }
-`;
+`
 function App() {
+
+
   const [user, setUser] = useState(null);
 
-  const handleLogin = () => {
-    localStorage.setItem("login", "SetLogin");
-    const getuser = localStorage.getItem("login");
+  const handleLogin = ({ setUser }) => {
+    const getuser = localStorage.getItem('login');
     setUser(getuser);
-  };
+  }
+
+  const addLogin = (email) => {
+    localStorage.setItem('login', email);
+  }
+
+  const handleLogOut = () => {
+    localStorage.removeItem('login')
+  }
 
   return (
     <>
-      <GlobalStyle />
-      <S.Wrapper>
-        <S.Container>
-          <AppRoutes user={user} onClick={handleLogin} />
-        </S.Container>
-      </S.Wrapper>
+      <Context.Provider
+        value={{ handleLogin, user, setUser, addLogin, handleLogOut }}>
+        <GlobalStyle />
+        <S.Wrapper>
+          <S.Container>
+            <AppRoutes />
+          </S.Container>
+        </S.Wrapper>
+      </Context.Provider>
     </>
   );
 }
