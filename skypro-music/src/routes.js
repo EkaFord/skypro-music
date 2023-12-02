@@ -3,12 +3,11 @@ import { Category } from "./pages/categories/categories.jsx";
 import { Login } from "./pages/login/login.jsx";
 import { Registration } from "./pages/registration/registration.jsx";
 import { MyPlaylist } from "./pages/myplaylist/MyPlayList.jsx";
-import { Main } from "./main/components/main.jsx";
+import { Main } from "./pages/error/main.jsx";
 import { Error } from "./pages/error/error.jsx";
 import { ProtectedRoute } from "./pages/ProtectedRoute.jsx";
 
 export const AppRoutes = ({ user, onClick }) => {
-
   return (
     <Routes>
       <Route path="/login" element={<Login onClick={onClick} />} />

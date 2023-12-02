@@ -1,9 +1,7 @@
-import { createGlobalStyle } from 'styled-components';
-import * as S from "./main/components/mainStyles"
+import { createGlobalStyle } from "styled-components";
+import * as S from "./components/components/mainStyles";
 import { AppRoutes } from "./routes";
 import { useState } from "react";
-
-
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -50,18 +48,16 @@ const GlobalStyle = createGlobalStyle`
     font-family: "StratosSkyeng", sans-serif;
     color: #ffffff;
   }
-`
+`;
 function App() {
-
-
   const [user, setUser] = useState(null);
 
-  const handleLogin = () =>  {
-    localStorage.setItem('login', 'SetLogin');
-    const getuser = localStorage.getItem('login');
+  const handleLogin = () => {
+    localStorage.setItem("login", "SetLogin");
+    const getuser = localStorage.getItem("login");
     setUser(getuser);
-  }
-  
+  };
+
   return (
     <>
       <GlobalStyle />
