@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { createGlobalStyle } from "styled-components";
 import * as S from "./mainStyles";
-import AudioPlayer from "../../components/components/AudioPlayer/AudioPlayer";
-import NavMenu from "../../components/components/NavMenu/NavMenu";
-import TrackList from "../../components/components/TrackList/TrackList";
-import SideBar from "../../components/components/SideBar/SideBar";
-import LoadingContext from "../../components/components/context";
+import AudioPlayer from "../../components/AudioPlayer/AudioPlayer";
+import NavMenu from "../../components/NavMenu/NavMenu";
+import TrackList from "../../components/TrackList/TrackList";
+import SideBar from "../../components/SideBar/SideBar";
+import LoadingContext from "../../context";
 import { getTodos } from "../../api.js";
 
 export function Main() {
