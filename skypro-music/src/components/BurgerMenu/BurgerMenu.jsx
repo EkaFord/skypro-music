@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import * as S from "./BurgerMenuStyles"
+import { useContext } from 'react';
+import Context from '../../contexts';
+
 
 const { useState } = React;
 
@@ -12,9 +15,12 @@ const BurgerMenu = () => {
 
   const toggleVisibility = () => setVisible(!visible);
 
-  const handleLogOut = () => {
-    localStorage.removeItem('login')
-  }
+  const {  handleLogOut } = useContext(Context)
+
+
+  // const handleLogOut = () => {
+  //   localStorage.removeItem('login')
+  // }
 
   return (
     <>

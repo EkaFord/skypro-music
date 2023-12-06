@@ -1,18 +1,17 @@
-import React, { useContext, useEffect } from 'react';
-import PlayLists from '../PlayLists/PlayLists';
-import * as S from './SideBarStyles';
+import React from "react";
+import PlayLists from "../PlayLists/PlayLists";
+import * as S from "./SideBarStyles"
+import { useContext, useEffect } from 'react';
 import Context from '../../contexts';
 
-const SideBar = () => {
-  const { handleLogin, user, setUser } = useContext(Context);
 
+const SideBar = () => {
+
+  const { handleLogin, user, setUser, handleLogOut } = useContext(Context)
   useEffect(() => {
     handleLogin({ user, setUser });
-  }, [handleLogin, user, setUser]);
+  }, []);
 
-  const handleLogOut = () => {
-    setUser(null);
-  };
 
   return (
     <S.MainSidebar>
