@@ -1,11 +1,12 @@
 import styled, { keyframes } from 'styled-components'
 
 export const Bar = styled.div`
-  /* position: absolute; */
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
   background: rgba(28, 28, 28, 0.5);
+  z-index: 1000;
 `
 export const BarContent = styled.div`
   display: flex;
