@@ -1,13 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import AudioPlayerLoad from "../AudioPlayerLoad/AudioPlayerLoad";
-import { useContext, useState, useRef } from "react";
 import LoadingContext from "../../context";
 import * as S from "./AudioPlayerStyles";
-//import ProgressBar from "../ProgressState";
-import {
-  ProgressInputTrack,
-  ProgressInputVolume,
-} from "../ProgressInputs/ProgressInput";
+import { ProgressInputTrack, ProgressInputVolume } from "../ProgressInputs/ProgressInput";
 
 const AudioPlayer = () => {
   const { loading, currentTrack } = useContext(LoadingContext);
@@ -26,7 +21,11 @@ const AudioPlayer = () => {
     ref.current.pause();
   };
 
+  // Modified sToStr function to handle NaN
   function sToStr(s) {
+    if (isNaN(s)) {
+      return "00:00";
+    }
     const minutes = Math.floor(s / 60);
     const seconds = Math.floor(s % 60)
       .toString()
@@ -37,12 +36,15 @@ const AudioPlayer = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
+  // Modified useEffect for handling currentTime and duration
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentTime(sToStr(ref.current.currentTime));
-      setDuration(sToStr(ref.current.duration));
+      if (!isNaN(ref.current.currentTime) && !isNaN(ref.current.duration)) {
+        setCurrentTime(sToStr(ref.current.currentTime));
+        setDuration(sToStr(ref.current.duration));
+      }
     }, 1000);
-    return () => clearTimeout(interval);
+    return () => clearInterval(interval);
   }, [currentTrack]);
 
   const handleRepeat = () => {
