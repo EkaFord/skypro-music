@@ -34,7 +34,7 @@ const BurgerMenu = () => {
           <S.MenuList>
             <S.MenuItem>
               <S.MenuLink to="/">
-                Главное
+                Главная
               </S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
