@@ -26,7 +26,7 @@ export const AppRoutes = () => {
 
       {/* <Route path="/registration" element={<Registration />} /> */}
 
-      <Route element={<ProtectedRoute isAllowed={Boolean({ user })} />}>
+      <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
         <Route path="/MyPlaylist" element={<MyPlaylist />} />
         <Route path="/category/:id" element={<Category />} />
         <Route path="/" element={<Main />} />
