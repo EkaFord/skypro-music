@@ -43,13 +43,13 @@ export function Login() {
         getToken({ email, password })
           .then((token) => {
             console.log(token)
-            addLogin(email)
+            addLogin("email")
             window.location.href = '/'
             // localStorage.setItem('login', user.email);
           })
       })
       .catch((error) => {
-        setError(error)
+        setError(error.message)
       }).finally(() => {
         setLoading(false)
       })
