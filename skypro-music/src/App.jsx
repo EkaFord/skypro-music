@@ -1,10 +1,10 @@
-import { createGlobalStyle } from 'styled-components';
-import * as S from "./pages/main/mainStyles"
+import { createGlobalStyle } from "styled-components";
+import * as S from "./pages/main/mainStyles";
 import { AppRoutes } from "./routes";
 import { useState } from "react";
-import Context from './contexts';
-import React from 'react';
-
+import Context from "./contexts";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -51,29 +51,31 @@ const GlobalStyle = createGlobalStyle`
     font-family: "StratosSkyeng", sans-serif;
     color: #ffffff;
   }
-`
+`;
 function App() {
-
-
   const [user, setUser] = useState(null);
-
+  const navigate = useNavigate();
   const handleLogin = ({ setUser }) => {
-    const getuser = localStorage.getItem('login');
-    setUser(getuser);
-  }
+    const getuser = localStorage.getItem("login");
+    if (getuser) {
+      setUser(getuser);
+      navigate("/");
+    }
+  };
 
   const addLogin = (email) => {
-    localStorage.setItem('login', email);
-  }
+    localStorage.setItem("login", email);
+  };
 
   const handleLogOut = () => {
-    localStorage.removeItem('login')
-  }
+    localStorage.removeItem("login");
+  };
 
   return (
     <>
       <Context.Provider
-        value={{ handleLogin, user, setUser, addLogin, handleLogOut }}>
+        value={{ handleLogin, user, setUser, addLogin, handleLogOut }}
+      >
         <GlobalStyle />
         <S.Wrapper>
           <S.Container>
