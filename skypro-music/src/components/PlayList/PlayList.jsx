@@ -1,8 +1,8 @@
 import React from "react";
 import * as S from "./PlayListStyles";
-import LoadingContext from "../context";
+import LoadingContext from "../../context";
 import { useContext } from "react";
-import { playLists } from "../../../PlayListsAll.js";
+import { playLists } from "../../PlayListsAll.js";
 
 const PlayList = () => {
   const { loading, setLoading } = useContext(LoadingContext);

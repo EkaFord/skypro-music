@@ -1,87 +1,130 @@
-import styled from 'styled-components'
+// import styled from 'styled-components'
 import { Link } from "react-router-dom";
+import { styled } from "styled-components";
 
 
-export const LoginBox = styled.div`
-  width: 366px;
-  height: 439px;
-  flex-shrink: 0;
+
+export const PageContainer = styled.div`
+  max-width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+`;
+
+export const ModalForm = styled.div`
+  --modal-width: 366px;
+  --modal-height: 439px;
+
+  position: absolute;
+  left: calc(50% - (var(--modal-width) / 2));
+  top: calc(50% - (var(--modal-height) / 2));
+  box-sizing: border-box;
+  width: var(--modal-width);
+  min-height: var(--modal-height);
+  background-color: #ffffff;
   border-radius: 12px;
-  background: #FFF;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 43px 47px 47px 40px;
+`;
+export const ModalLogo = styled.div`
   display: flex;
-  flex-direction: column;
-  padding: 43px 47px 47px 41px;
-`
-export const LoginImg = styled.img`
-  width: 140.001px;
-  height: 21px;
-  flex-shrink: 0;
-  margin-left: 72px;
-  margin-bottom: 43px;
-`
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 34px;
+  background-color: transparent;
+`;
 
-export const LoginInput = styled.input`
+export const ModalLogoImage = styled.img`
+  width: 140px;
+  height: 21px;
+`;
+
+export const ModalInput = styled.input`
+  width: 100%;
   border: none;
-  border-bottom: 1px solid #D0CECE;
-  padding: 8px;
+  border-bottom: 1px solid #d0cece;
+  padding: 8px 1px;
+
   &::placeholder {
-    font-size: 18px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px; /* 133.333% */
-    letter-spacing: -0.054px;
-    color: #E1E1E1;
+    font-size: 18px;
+    line-height: 24px;
+    color: #d0cece;
   }
-`
+`;
 
-export const LoginInputEmail = styled(LoginInput)`
-  margin-bottom: 30px;
-`
+const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 
-export const LoginInputPassword = styled(LoginInput)`
-`
-
-export const LoginInputPasswordRepeat = styled(LoginInput)`
-  margin-top: 30px;
-`
-
-export const LoginButton = styled.button`
   width: 278px;
   height: 52px;
   border-radius: 6px;
   border: none;
-`
-
-export const LoginButtonIn = styled(LoginButton)`
-  background:  #580EA2;
-  color: #FFF;
-  font-variant-numeric: lining-nums proportional-nums;
-  font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px; /* 133.333% */
-  letter-spacing: -0.054px;
-  margin-top: 52px;
-  &:hover {
-    background: #3F007D;
-  };
-  &:active {
-    background:#271A58;
-  }
-`
+  font-size: 18px;
+  line-height: 24px;
 
-export const LoginButtonReg = styled(LoginButton)`
-  border: 1px solid #D0CECE;
-  background:  #fff;
-  &:hover {
-    background: #F4F5F6;
-  };
-  &:active {
-    background:#D9D9D9;
+  &:disabled {
+    background-color: #303030;
   }
-`
-export const LinkS = styled(Link)`
-  margin-bottom: 20px;
-`
+`;
+
+export const PrimaryButton = styled(Button)`
+  color: #ffffff;
+  background-color: #580ea2;
+  &:hover {
+    background-color: #3f007d;
+  }
+
+  &:active {
+    background-color: #271a58;
+  }
+
+  &:disabled,
+  &[disabled] {
+    border: 1px solid #999;
+    background-color: grey;
+    color: white;
+  }
+`;
+
+export const SecondaryButton = styled(Button)`
+  color: #000000;
+  background-color: transparent;
+  border: 1px solid #d0cece;
+
+  &:hover {
+    background-color: #f4f5f6;
+  }
+
+  &:active {
+    background-color: #d9d9d9;
+  }
+`;
+
+export const Buttons = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 60px;
+  width: 100%;
+`;
+
+export const Inputs = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+`;
+
+export const Error = styled.div`
+  color: coral;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  margin-top: 20px;
+  text-align: left;
+`;
