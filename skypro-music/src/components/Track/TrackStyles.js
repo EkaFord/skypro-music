@@ -1,4 +1,24 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const blinkAnimation = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+export const BlinkingDot = styled.div`
+  width: 350px;
+  height: 15px;
+  background-color: #B672FF;
+  border-radius: 50%;
+  animation: ${blinkAnimation} 3s infinite;
+  margin-left: 3px;
+`;
 
 export const PlaylistItem = styled.div`
   width: 100%;
@@ -35,7 +55,7 @@ export const TrackTitleSvg = styled.svg`
   fill: transparent;
   stroke: #4e4e4e;
 `
-export const TrackTitleLink= styled.a`
+export const TrackTitleLink = styled.a`
 font-style: normal;
 font-weight: 400;
 font-size: 16px;
@@ -49,7 +69,7 @@ export const TrackTitleSpan = styled.span`
   line-height: 24px;
   color: #4e4e4e;
 `
-export const TrackAuthorLink= styled.a`
+export const TrackAuthorLink = styled.a`
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

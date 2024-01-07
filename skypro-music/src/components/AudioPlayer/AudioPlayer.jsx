@@ -3,136 +3,158 @@ import AudioPlayerLoad from "../AudioPlayerLoad/AudioPlayerLoad";
 import LoadingContext from "../../context";
 import * as S from "./AudioPlayerStyles";
 import { ProgressInputTrack, ProgressInputVolume } from "../ProgressInputs/ProgressInput";
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentTrack, getIsPlaing, nextTrack, prevTrack, getShuffle } from "../../store/slices/track";
+
 
 const AudioPlayer = () => {
-  const { loading, currentTrack } = useContext(LoadingContext);
+  const dispatch = useDispatch();
+
+
+  const currentTrack = useSelector(store => store.track.currentTrack)
+  const allTracks = useSelector(state => state.track.allTracks)
+  const shuffle = useSelector(state => state.track.shuffle)
+  const shuffleAllTracks = useSelector(state => state.track.shuffleAllTracks)
+
+  const arreyAllTracks = shuffle ? shuffleAllTracks : allTracks
+
+  const { loading } = useContext(LoadingContext)
   const [isPlaying, setPlaying] = useState(false);
   const [isRepeat, setIsRepeat] = useState(false);
 
-  const ref = useRef(0);
+
+  const aRef = useRef(0);
 
   const handleStart = () => {
-    ref.current.play();
+    aRef.current.play();
   };
 
-  useEffect(handleStart, [currentTrack]);
+  useEffect(handleStart, [currentTrack])
 
   const handleStop = () => {
-    ref.current.pause();
+    aRef.current.pause();
   };
 
-  // Modified sToStr function to handle NaN
   function sToStr(s) {
-    if (isNaN(s)) {
-      return "00:00";
+    let m = Math.trunc(s / 60) + ''
+    s = (s % 60) + ''
+    let sec = Math.floor(s.padStart(2, 0))
+    if (sec < 10) {
+      sec = `0` + Math.floor(s.padStart(2, 0))
     }
-    const minutes = Math.floor(s / 60);
-    const seconds = Math.floor(s % 60)
-      .toString()
-      .padStart(2, "0");
-    return `${String(minutes).padStart(2, "0")}:${seconds}`;
+    return m.padStart(2, 0) + ':' + `${sec}`
   }
 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  // Modified useEffect for handling currentTime and duration
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isNaN(ref.current.currentTime) && !isNaN(ref.current.duration)) {
-        setCurrentTime(sToStr(ref.current.currentTime));
-        setDuration(sToStr(ref.current.duration));
+
+    const handleTimeUpdate = () => {
+      if (aRef.current?.currentTime && aRef.current?.duration) {
+        setCurrentTime(sToStr(aRef.current.currentTime))
+        setDuration(sToStr(aRef.current.duration))
+      } else {
+        setCurrentTime(0)
+        setDuration(0)
       }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [currentTrack]);
+    }
+
+    const getNextTrack = () => {
+      dispatch(nextTrack({ arreyAllTracks, currentTrack }));
+    }
+
+    aRef.current.addEventListener('timeupdate', handleTimeUpdate)
+    aRef.current.addEventListener('ended', getNextTrack)
+
+    return () => {
+      aRef.current?.removeEventListener('timeupdate', handleTimeUpdate)
+      aRef.current?.removeEventListener('ended', getNextTrack)
+    }
+  }, [currentTrack])
 
   const handleRepeat = () => {
-    ref.current.loop = !isRepeat;
-    setIsRepeat(!isRepeat);
+    aRef.current.loop = !isRepeat;
+    setIsRepeat(!isRepeat)
   };
 
   const awaitImplementation = () => {
-    alert("Functionality not implemented yet");
+    alert('Функционал еще не реализован');
   };
 
   return (
     <>
       <audio
-        ref={ref}
+        ref={aRef}
         src={currentTrack.track_file}
-        controls="controls"
+        // controls="controls"
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
       ></audio>
       <S.Bar>
         <S.BarContent>
-          <S.TimeCode>
-            {currentTime} / {duration}
-          </S.TimeCode>
-          <ProgressInputTrack ref={ref} />
+          <S.TimeCode >{currentTime} / {duration}</S.TimeCode>
+          <ProgressInputTrack ref={aRef} />
           <S.BarPlayerBlock>
             <S.BarPlayer>
               <S.PlayerControls>
                 <S.PlayerBtnPrev>
-                  <S.PlayerBtnPrevSvg onClick={awaitImplementation} alt="prev">
+                  <S.PlayerBtnPrevSvg onClick={() => { dispatch(prevTrack({ arreyAllTracks, currentTrack })) }} alt="prev">
                     <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
                   </S.PlayerBtnPrevSvg>
                 </S.PlayerBtnPrev>
-                {isPlaying ? (
-                  <S.PlayerBtnPlay onClick={handleStop}>
+                {isPlaying ?
+                  <S.PlayerBtnPlay onClick={() => {
+                    handleStop();
+                    dispatch(getIsPlaing(false));
+                  }}>
                     <S.PlayerBtnPlaySvg as="svg" alt="play">
-                      <svg
-                        width="15"
-                        height="19"
-                        viewBox="0 0 15 19"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
+                      <svg width="15" height="19" viewBox="0 0 15 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="5" height="19" fill="#D9D9D9" />
                         <rect x="10" width="5" height="19" fill="#D9D9D9" />
                       </svg>
                     </S.PlayerBtnPlaySvg>
                   </S.PlayerBtnPlay>
-                ) : (
-                  <S.PlayerBtnPlay onClick={handleStart}>
+                  :
+                  <S.PlayerBtnPlay onClick={() => {
+                    handleStart();
+                    dispatch(getIsPlaing(true));
+                  }}>
                     <S.PlayerBtnPlaySvg as="svg" alt="play">
                       <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
                     </S.PlayerBtnPlaySvg>
                   </S.PlayerBtnPlay>
-                )}
+                }
                 <S.PlayerBtnNext>
-                  <S.PlayerBtnNextSvg onClick={awaitImplementation} alt="next">
+                  <S.PlayerBtnNextSvg onClick={() => { dispatch(nextTrack({ arreyAllTracks, currentTrack })) }
+                  } alt="next">
                     <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
                   </S.PlayerBtnNextSvg>
                 </S.PlayerBtnNext>
-                {isRepeat ? (
+                {isRepeat ?
                   <S.PlayerBtnRepeat onClick={handleRepeat}>
                     <S.PlayerBtnRepeatActiveSvg alt="repeat">
                       <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
                     </S.PlayerBtnRepeatActiveSvg>
                   </S.PlayerBtnRepeat>
-                ) : (
+
+                  :
                   <S.PlayerBtnRepeat onClick={handleRepeat}>
                     <S.PlayerBtnRepeatSvg alt="repeat">
                       <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
                     </S.PlayerBtnRepeatSvg>
                   </S.PlayerBtnRepeat>
-                )}
-                <S.PlayerBtnShuffle>
-                  <S.PlayerBtnShuffleSvg
-                    onClick={awaitImplementation}
-                    alt="shuffle"
-                  >
+                }
+                <S.PlayerBtnShuffle onClick={() => { dispatch(getShuffle(!shuffle)) }}>
+                  <S.PlayerBtnShuffleSvg alt="shuffle" $stroke={shuffle} >
                     <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
                   </S.PlayerBtnShuffleSvg>
                 </S.PlayerBtnShuffle>
               </S.PlayerControls>
 
               <S.PlayerTrackPlay>
-                {loading ? (
-                  <AudioPlayerLoad />
-                ) : (
+
+                {loading ? <AudioPlayerLoad /> :
                   <S.TrackPlayContain>
                     <S.TrackPlayImage>
                       <S.TrackPlaySvg alt="music">
@@ -149,8 +171,7 @@ const AudioPlayer = () => {
                         {currentTrack.author}
                       </S.TrackPlayAlbumLink>
                     </S.TrackPlayAlbum>
-                  </S.TrackPlayContain>
-                )}
+                  </S.TrackPlayContain>}
 
                 <S.TrackPlayLikeDis>
                   <S.TrackPlayLike onClick={awaitImplementation}>
@@ -174,13 +195,13 @@ const AudioPlayer = () => {
                   </S.VolumeSvg>
                 </S.VolumeImage>
                 <S.VolumeProgress>
-                  <ProgressInputVolume ref={ref} />
+                  <ProgressInputVolume ref={aRef} />
                 </S.VolumeProgress>
               </S.VolumeContent>
             </S.BarVolumeBlock>
           </S.BarPlayerBlock>
         </S.BarContent>
-      </S.Bar>
+      </S.Bar >
     </>
   );
 };

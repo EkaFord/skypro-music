@@ -1,12 +1,11 @@
 import styled, { keyframes } from 'styled-components'
 
 export const Bar = styled.div`
-  position: fixed;
+  /* position: absolute; */
   bottom: 0;
   left: 0;
   width: 100%;
   background: rgba(28, 28, 28, 0.5);
-  z-index: 1000;
 `
 export const BarContent = styled.div`
   display: flex;
@@ -86,7 +85,13 @@ export const PlayerBtnShuffleSvg = styled.svg`
   width: 19px;
   height: 12px;
   fill: transparent;
-  stroke: #696969;
+  stroke: ${(props) => (props.$stroke ? '#D9D9D9' : '#696969')};
+
+  &:hover,
+  &[hover]{
+    stroke: ${(props) => (props.$stroke ? '#D9D9D9' : '#D9D9D9')};
+
+  }
 `
 
 export const PlayerTrackPlay = styled.div`
@@ -237,63 +242,6 @@ export const PlayerBtnShuffle = styled(PlayerBtnsSvg)`
 export const VolumeProgress = styled(Btn)`
   width: 109px;
 `
-export const VolumeProgressLine = styled(Btn)`
-  width: 109px;
-  --progress-height: 8px;
-  --progress-color: #b672ff;
-  /* --progress-color: ${(props) => props.$color ?? "#b672ff"}; */
-
-  --progress-bg-color: #2e2e2e;
-
-  margin: 0;
-  width: 100%;
-  height: var(--progress-height);
-  -webkit-appearance: none;
-  cursor: pointer;
-  background: transparent;
-  position: relative;
-  overflow: hidden;
-
-  &::-webkit-slider-runnable-track {
-    position: relative;
-    height: var(--progress-height);
-    background: var(--progress-bg-color);
-  }
-  &::-webkit-slider-thumb {
-    --thumb-height: 1px;
-    --thumb-width: 1px;
-    position: relative;
-    -webkit-appearance: none;
-    width: var(--thumb-width, var(--thumb-height));
-    box-shadow: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0
-      100vmax var(--progress-color);
-  }
-
-  &::-webkit-slider-runnable-track {
-    background: var(--progress-bg-color);
-  }
-
-  /* FF */
-  &::-moz-range-track {
-    width: 100%;
-    height: var(--progress-height);
-    background: var(--progress-bg-color);
-    border: none;
-    border-radius: 0px;
-  }
-  &::-moz-range-thumb {
-    border: none;
-    height: 25px;
-    width: 25px;
-    border-radius: 50%;
-    background: transparent;
-  }
-  &::-moz-range-progress {
-    background-color: var(--progress-color);
-    height: var(--progress-height);
-  }
-`
-
 //Часть для скелетонов
 
 const SkeletonAnim = keyframes`
@@ -321,7 +269,8 @@ export const PlayerBtnRepeatActiveSvg = styled.svg`
   height: 12px;
   fill: transparent;
   stroke: #ffffff;
-  &:hover  {
+  &:hover,
+  &[hover]  {
     fill: transparent;
     stroke: #ffffff;
   }
@@ -332,59 +281,3 @@ export const TimeCode = styled.div`
     text-align: end;
     margin: 10px 50px 10px;
 `
-
-export const StyledProgressInput = styled.input`
-  --progress-height: 8px;
-  --progress-color: #b672ff;
-  /* --progress-color: ${(props) => props.$color ?? "#b672ff"}; */
-
-  --progress-bg-color: #2e2e2e;
-
-  margin: 0;
-  width: 100%;
-  height: var(--progress-height);
-  -webkit-appearance: none;
-  cursor: pointer;
-  background: transparent;
-  position: relative;
-  overflow: hidden;
-
-  &::-webkit-slider-runnable-track {
-    position: relative;
-    height: var(--progress-height);
-    background: var(--progress-bg-color);
-  }
-  &::-webkit-slider-thumb {
-    --thumb-height: 1px;
-    --thumb-width: 1px;
-    position: relative;
-    -webkit-appearance: none;
-    width: var(--thumb-width, var(--thumb-height));
-    box-shadow: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0
-      100vmax var(--progress-color);
-  }
-
-  &::-webkit-slider-runnable-track {
-    background: var(--progress-bg-color);
-  }
-
-  /* FF */
-  &::-moz-range-track {
-    width: 100%;
-    height: var(--progress-height);
-    background: var(--progress-bg-color);
-    border: none;
-    border-radius: 0px;
-  }
-  &::-moz-range-thumb {
-    border: none;
-    height: 25px;
-    width: 25px;
-    border-radius: 50%;
-    background: transparent;
-  }
-  &::-moz-range-progress {
-    background-color: var(--progress-color);
-    height: var(--progress-height);
-  }
-`;

@@ -8,49 +8,44 @@ import SideBar from "../../components/SideBar/SideBar";
 import LoadingContext from "../../context";
 import { getTodos } from "../../api.js";
 
+import { useDispatch, useSelector } from "react-redux";
+import { getAllTracks } from '../../store/slices/track.js';
+
+
+
 export function Main() {
-  const [loading, setLoading] = useState(true);
+  const currentTrackS = useSelector(state => state.track.currentTrack)
+
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true)
   const [tracks, setTracks] = useState([]);
-  const [loadings, setLoadings] = useState(true);
-  const [addTracksError, setAddTracksError] = useState(null);
-  const [currentTrack, setCurrentTrack] = useState(null);
+  const [loadings, setLoadings] = useState(true)
+  const [addTracksError, setAddTracksError] = useState(null)
+  const [currentTrack, setCurrentTrack] = useState(null)
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setLoading(false);
+      setLoading(false)
     }, 5000);
     return () => clearTimeout(timeout);
-  }, []);
+  }, [])
 
   useEffect(() => {
     getTodos()
       .then((tracks) => {
-        console.log(tracks);
+        dispatch(getAllTracks(tracks))
         setTracks(tracks);
-      })
-      .catch(() => {
+      }).catch(() => {
         setAddTracksError(true);
-      })
-      .finally(() => {
+      }).finally(() => {
         setLoadings(false);
-      });
-  }, []);
+      })
+  }, [])
 
   return (
+
     <LoadingContext.Provider
-      value={{
-        loading,
-        setLoading,
-        tracks,
-        setTracks,
-        loadings,
-        setLoadings,
-        addTracksError,
-        setAddTracksError,
-        currentTrack,
-        setCurrentTrack,
-      }}
-    >
+      value={{ loading, setLoading, tracks, setTracks, loadings, setLoadings, addTracksError, setAddTracksError, currentTrack, setCurrentTrack }}>
       <div>
         <S.Wrapper>
           <S.Container>
@@ -59,7 +54,7 @@ export function Main() {
               <TrackList />
               <SideBar />
             </S.Main>
-            {currentTrack ? <AudioPlayer /> : null}
+            {currentTrackS ? <AudioPlayer /> : null}
             <footer className="footer" />
           </S.Container>
         </S.Wrapper>
