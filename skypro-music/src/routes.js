@@ -8,6 +8,7 @@ import { Error } from "./pages/error/error.jsx";
 import { ProtectedRoute } from "./pages/ProtectedRoute.jsx";
 import { useContext, useEffect} from 'react';
 import Context from "./contexts.jsx";
+import MyTrackList from "./components/TrackList/MyTrackList.jsx";
 
 
 export const AppRoutes = () => {

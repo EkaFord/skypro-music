@@ -4,7 +4,8 @@ import LoadingContext from "../../context";
 import * as S from "./AudioPlayerStyles";
 import { ProgressInputTrack, ProgressInputVolume } from "../ProgressInputs/ProgressInput";
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentTrack, getIsPlaing, nextTrack, prevTrack, getShuffle } from "../../store/slices/track";
+import { getCurrentTrack, getIsPlaying, nextTrack, prevTrack, getShuffle } from "../../store/slices/track";
+import Context from "../../contexts";
 
 
 const AudioPlayer = () => {
@@ -18,7 +19,7 @@ const AudioPlayer = () => {
 
   const arreyAllTracks = shuffle ? shuffleAllTracks : allTracks
 
-  const { loading } = useContext(LoadingContext)
+  const { loading } = useContext(Context)
   const [isPlaying, setPlaying] = useState(false);
   const [isRepeat, setIsRepeat] = useState(false);
 
@@ -106,7 +107,7 @@ const AudioPlayer = () => {
                 {isPlaying ?
                   <S.PlayerBtnPlay onClick={() => {
                     handleStop();
-                    dispatch(getIsPlaing(false));
+                    dispatch(getIsPlaying(false));
                   }}>
                     <S.PlayerBtnPlaySvg as="svg" alt="play">
                       <svg width="15" height="19" viewBox="0 0 15 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -118,7 +119,7 @@ const AudioPlayer = () => {
                   :
                   <S.PlayerBtnPlay onClick={() => {
                     handleStart();
-                    dispatch(getIsPlaing(true));
+                    dispatch(getIsPlaying(true));
                   }}>
                     <S.PlayerBtnPlaySvg as="svg" alt="play">
                       <use xlinkHref="img/icon/sprite.svg#icon-play"></use>

@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetCurrentTrack } from "./store/slices/track";
+import { getTodos } from './api';
+
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -42,8 +44,8 @@ const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: "StratosSkyeng";
     src: local("StratosSkyeng"), local("StratosSkyeng"),
-      url("../fonts/StratosSkyeng.woff2") format("woff2"),
-      url("../fonts/StratosSkyeng.woff") format("woff");
+      url("/fonts/StratosSkyeng.woff2") format("woff2"),
+      url("/fonts/StratosSkyeng.woff") format("woff");
     font-weight: 400;
     font-style: normal;
   }
@@ -55,20 +57,9 @@ const GlobalStyle = createGlobalStyle`
     font-family: "StratosSkyeng", sans-serif;
     color: #ffffff;
   }
-`;
+`
 function App() {
   const dispatch = useDispatch();
-
-  // const curTrack = useSelector(store => store.track.currentTrack)
-  // const curTrack1 = useSelector(state => state.track.currentTrack)
-
-  // // console.log(curTrack)
-  // // console.log(curTrack1)
-
-
-  // const allTracks = useSelector(state => state.track.allTracks)
-
-
   const [user, setUser] = useState(localStorage.getItem('login'));
 
   const handleLogin = ({ setUser }) => {
@@ -87,10 +78,27 @@ function App() {
     dispatch(resetCurrentTrack(null))
   }
 
+  const userId = useSelector(state => state.user.id)
+  const [isMainPage, setIsMainPage] = useState(true)
+  console.log(userId)
+  // useEffect(() => {
+  //   getTodos()
+  //     .then((tracks) => {
+  //       console.log("eeee")
+  //       // dispatch(getAllTracks(tracks))
+  //       // setTracks(tracks);
+  //     }).catch(() => {
+  //       setAddTracksError(true);
+  //     }).finally(() => {
+  //       setLoadings(false);
+  //     })
+  // }, [])
+
+
   return (
     <>
       <Context.Provider
-        value={{ handleLogin, user, setUser, addLogin, handleLogOut }}>
+        value={{ handleLogin, user, setUser, addLogin, handleLogOut, isMainPage, setIsMainPage }}>
         <GlobalStyle />
         <S.Wrapper>
           <S.Container>
