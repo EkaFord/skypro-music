@@ -1,10 +1,10 @@
-import React, { useEffect, useContext, useState, useRef } from "react";
+import React, { useEffect } from "react";
 import AudioPlayerLoad from "../AudioPlayerLoad/AudioPlayerLoad";
-import LoadingContext from "../../context";
-import * as S from "./AudioPlayerStyles";
+import { useContext, useState, useRef } from 'react';
+import * as S from "./AudioPlayerStyles"
 import { ProgressInputTrack, ProgressInputVolume } from "../ProgressInputs/ProgressInput";
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentTrack, getIsPlaying, nextTrack, prevTrack, getShuffle } from "../../store/slices/track";
+import { getIsPlaying, nextTrack, prevTrack, getShuffle } from "../../store/slices/track";
 import Context from "../../contexts";
 
 
@@ -16,8 +16,10 @@ const AudioPlayer = () => {
   const allTracks = useSelector(state => state.track.allTracks)
   const shuffle = useSelector(state => state.track.shuffle)
   const shuffleAllTracks = useSelector(state => state.track.shuffleAllTracks)
+  const currentPage = useSelector(state => state.track.currentPage)
+  const currentPlayList = useSelector(state => state.track.currentPlayList)
 
-  const arreyAllTracks = shuffle ? shuffleAllTracks : allTracks
+  const arreyAllTracks = shuffle ? shuffleAllTracks : currentPlayList
 
   const { loading } = useContext(Context)
   const [isPlaying, setPlaying] = useState(false);
