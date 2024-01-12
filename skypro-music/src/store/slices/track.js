@@ -73,8 +73,6 @@ const getCurrentTrackSlace = createSlice({
       state.currentPage = action.payload;
     }
   },
-
-  
   // extraReducers: {
   //   [getLikes.fulfilled]: (state, action) => {
   //     console.log(action.payload)

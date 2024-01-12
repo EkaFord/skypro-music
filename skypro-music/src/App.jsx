@@ -1,14 +1,12 @@
-import { createGlobalStyle } from "styled-components";
-import * as S from "./pages/main/mainStyles";
+import { createGlobalStyle } from 'styled-components';
+import * as S from "./pages/main/mainStyles"
 import { AppRoutes } from "./routes";
 import { useState } from "react";
-import Context from "./contexts";
-import React from "react";
-import { useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from 'react-redux';
+import Context from './contexts';
+import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetCurrentTrack } from "./store/slices/track";
+import { resetCurrentTrack, getAllTracks } from "./store/slices/track";
 import { getTodos } from './api';
 
 
@@ -84,7 +82,7 @@ function App() {
   // useEffect(() => {
   //   getTodos()
   //     .then((tracks) => {
-  //       console.log("eeee")
+  //       console.log("done")
   //       // dispatch(getAllTracks(tracks))
   //       // setTracks(tracks);
   //     }).catch(() => {
