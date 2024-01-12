@@ -27,7 +27,7 @@ const getCurrentTrackSlace = createSlice({
       state.indexCurrentTrack = action.payload.id
     },
 
-    getIsPlaing(state, action) {
+    getIsPlaying(state, action) {
       state.isPlaying = action.payload
     },
 
@@ -87,7 +87,7 @@ const getCurrentTrackSlace = createSlice({
 export const {
   getAllTracks,
   getCurrentTrack,
-  getIsPlaing,
+  getIsPlaying,
   nextTrack,
   prevTrack,
   getShuffle,
