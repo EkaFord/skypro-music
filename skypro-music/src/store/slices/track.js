@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useDispatch, useSelector } from "react-redux";
+import { createSlice } from "@reduxjs/toolkit";
+//import { useDispatch, useSelector } from "react-redux";
 
 const initialState = {
   allTracks: [],
@@ -13,7 +13,7 @@ const initialState = {
   currentPage: "",
 };
 
-const getCurrentTrackSlace = createSlice({
+const getCurrentTrackSlice = createSlice({
   name: 'track',
   initialState,
   reducers: {
@@ -73,14 +73,17 @@ const getCurrentTrackSlace = createSlice({
       state.currentPage = action.payload;
     }
   },
-  // extraReducers: {
-  //   [getLikes.fulfilled]: (state, action) => {
-  //     console.log(action.payload)
-  //   },
-  //   [getLikes.rejected]: (state, action) => {
-  //     console.log(action.payload)
-  //   }
-  // }
+  //extraReducers: (builder) => {
+    // Add your async thunks here using builder.addCase()
+    // Example:
+    // builder
+    //   .addCase(yourAsyncThunk.fulfilled, (state, action) => {
+    //     // Handle the fulfilled state
+    //   })
+    //   .addCase(yourAsyncThunk.rejected, (state, action) => {
+    //     // Handle the rejected state
+    //   });
+  //}
 });
 
 
@@ -95,6 +98,6 @@ export const {
   getFavoriteTracks,
   getCurrentPlayList,
   getCurrentPage
-} = getCurrentTrackSlace.actions;
+} = getCurrentTrackSlice.actions;
 
-export default getCurrentTrackSlace.reducer;
+export default getCurrentTrackSlice.reducer;

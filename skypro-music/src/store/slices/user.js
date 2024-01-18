@@ -46,7 +46,7 @@ const initialState = {
   access: "",
 };
 
-const getUserSlace = createSlice({
+const getUserSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -61,18 +61,19 @@ const getUserSlace = createSlice({
       state.id = action.payload.user.id;
     }
   },
-  extraReducers: {
-    [getFreshToken.fulfilled]: (state, action) => {
-      state.access = action.payload.access;
-      console.log(state.access)
-    },
-    [getFreshToken.rejected]: (state, action) => {
-      console.log(action)
-    }
+  extraReducers: (builder) => {
+    builder
+      .addCase(getFreshToken.fulfilled, (state, action) => {
+        state.access = action.payload.access;
+        console.log(state.access);
+      })
+      .addCase(getFreshToken.rejected, (state, action) => {
+        console.log(action);
+      });
   }
 });
 
 
-export const { currentUserToken, currentUser } = getUserSlace.actions;
+export const { currentUserToken, currentUser } = getUserSlice.actions;
 
-export default getUserSlace.reducer;
+export default getUserSlice.reducer;
