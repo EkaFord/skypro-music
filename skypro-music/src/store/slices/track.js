@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-//import { useDispatch, useSelector } from "react-redux";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   allTracks: [],
@@ -9,59 +8,68 @@ const initialState = {
   shuffle: false,
   shuffleAllTracks: [],
   favoriteTracks: [],
+  categoryTracks: [],
   currentPlayList: [],
   currentPage: "",
+  authors: [],
+  genres: [],
+  authorsFilterArr: [],
+  genriesFilterArr: [],
+  search: "",
+  filteredTracks: [],
+  filretsActive: false,
 };
 
-const getCurrentTrackSlice = createSlice({
+const trackSlice = createSlice({
   name: 'track',
   initialState,
   reducers: {
-
     getAllTracks(state, action) {
-      state.allTracks = action.payload;
+      if (Array.isArray(action.payload)) {
+        state.allTracks = action.payload;
+        const allAuthors = action.payload.map(track => track.author);
+        const genres = action.payload.map(track => track.genre);
+        state.authors = [...new Set(allAuthors)].sort();
+        state.genres = [...new Set(genres)].sort();
+      } else {
+        console.error('Received payload is not an array:', action.payload);
+      }
     },
-
     getCurrentTrack(state, action) {
       state.currentTrack = action.payload;
-      state.indexCurrentTrack = action.payload.id
+      state.indexCurrentTrack = action.payload.id;
     },
-
     getIsPlaying(state, action) {
-      state.isPlaying = action.payload
+      state.isPlaying = action.payload;
     },
-
     nextTrack(state, action) {
-      const { arreyAllTracks, currentTrack } = action.payload
+      const { arreyAllTracks, currentTrack } = action.payload;
       if (arreyAllTracks.indexOf(currentTrack) === arreyAllTracks.length - 1) {
-        alert('Треки закончились')
-        return
+        alert('Tracks have ended');
+        return;
       }
       const indexOfNextTrack = arreyAllTracks.indexOf(currentTrack) + 1;
       state.currentTrack = arreyAllTracks[indexOfNextTrack];
-      state.isPlaying = true
+      state.isPlaying = true;
     },
-
     prevTrack(state, action) {
-      const { arreyAllTracks, currentTrack } = action.payload
+      const { arreyAllTracks, currentTrack } = action.payload;
       if (arreyAllTracks.indexOf(currentTrack) === 0) {
-        alert('Это первый трек')
-        return
+        alert('This is the first track');
+        return;
       }
-      const indexOfNextTrack = arreyAllTracks.indexOf(currentTrack) - 1
-      state.currentTrack = arreyAllTracks[indexOfNextTrack];
-      state.indexCurrentTrack = action.payload.id
+      const indexOfPrevTrack = arreyAllTracks.indexOf(currentTrack) - 1;
+      state.currentTrack = arreyAllTracks[indexOfPrevTrack];
+      state.indexCurrentTrack = action.payload.id;
     },
-
     getShuffle(state, action) {
       state.shuffle = action.payload;
-      const shuffleArray = new Array(...state.currentPlayList)
-      shuffleArray.sort(() => Math.random() - 0.5)
-      state.shuffleAllTracks = state.shuffle && shuffleArray
+      const shuffleArray = [...state.currentPlayList];
+      shuffleArray.sort(() => Math.random() - 0.5);
+      state.shuffleAllTracks = state.shuffle ? shuffleArray : [];
     },
-
-    resetCurrentTrack(state, action) {
-      state.currentTrack = action.payload;
+    resetCurrentTrack(state) {
+      state.currentTrack = null;
     },
     getFavoriteTracks(state, action) {
       state.favoriteTracks = action.payload;
@@ -71,21 +79,18 @@ const getCurrentTrackSlice = createSlice({
     },
     getCurrentPage(state, action) {
       state.currentPage = action.payload;
-    }
+    },
+    getCategoryTracks(state, action) {
+      state.categoryTracks = action.payload;
+    },
+    getFilterAuthorArr(state, action) {
+      
+    },
+    getFilterOff(state) {
+      state.filretsActive = false;
+    },
   },
-  //extraReducers: (builder) => {
-    // Add your async thunks here using builder.addCase()
-    // Example:
-    // builder
-    //   .addCase(yourAsyncThunk.fulfilled, (state, action) => {
-    //     // Handle the fulfilled state
-    //   })
-    //   .addCase(yourAsyncThunk.rejected, (state, action) => {
-    //     // Handle the rejected state
-    //   });
-  //}
 });
-
 
 export const {
   getAllTracks,
@@ -97,7 +102,10 @@ export const {
   resetCurrentTrack,
   getFavoriteTracks,
   getCurrentPlayList,
-  getCurrentPage
-} = getCurrentTrackSlice.actions;
+  getCurrentPage,
+  getCategoryTracks,
+  getFilterAuthorArr,
+  getFilterOff,
+} = trackSlice.actions;
 
-export default getCurrentTrackSlice.reducer;
+export default trackSlice.reducer;

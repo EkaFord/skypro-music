@@ -2,13 +2,17 @@ import React, { useEffect } from "react";
 import AudioPlayerLoad from "../AudioPlayerLoad/AudioPlayerLoad";
 import { useContext, useState, useRef } from 'react';
 import * as S from "./AudioPlayerStyles"
-import { ProgressInputTrack, ProgressInputVolume } from "../ProgressInputs/ProgressInput";
+import { ProgresInputTrack, ProgresInputVolume } from "../ProgressInputs/ProgressInput";
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsPlaying, nextTrack, prevTrack, getShuffle } from "../../store/slices/track";
 import Context from "../../contexts";
+import { useGetAllTracksQuery, useGetTrackQuery, useSetDisLikeMutation, useSetLikeMutation } from "../../query/tracks";
 
 
 const AudioPlayer = () => {
+  const [setLike] = useSetLikeMutation()
+  const [setDisLike] = useSetDisLikeMutation()
+
   const dispatch = useDispatch();
 
 
@@ -25,7 +29,10 @@ const AudioPlayer = () => {
   const [isPlaying, setPlaying] = useState(false);
   const [isRepeat, setIsRepeat] = useState(false);
 
-
+  const { data, isError, isLoading } = useGetTrackQuery(currentTrack.id)
+  // console.log(data)
+  // const curTr = data
+  // console.log(curTr.stared_user)
   const aRef = useRef(0);
 
   const handleStart = () => {
@@ -85,6 +92,22 @@ const AudioPlayer = () => {
     alert('Функционал еще не реализован');
   };
 
+  const activeLike = ({ data }) => {
+    // console.log(currentTrack)
+    if (data){
+      if (currentPage === 'main' || currentPage === 'category') {
+        const ollUsersLikes = data.stared_user
+        const userId = localStorage.getItem('id'); //Надо преобразовать в число
+        const like = ollUsersLikes.find(user => user.id == userId)
+        if (like) {
+          return (true)
+        }
+        return (false)
+      }
+  
+    }
+  }
+
   return (
     <>
       <audio
@@ -97,13 +120,13 @@ const AudioPlayer = () => {
       <S.Bar>
         <S.BarContent>
           <S.TimeCode >{currentTime} / {duration}</S.TimeCode>
-          <ProgressInputTrack ref={aRef} />
+          <ProgresInputTrack ref={aRef} />
           <S.BarPlayerBlock>
             <S.BarPlayer>
               <S.PlayerControls>
                 <S.PlayerBtnPrev>
                   <S.PlayerBtnPrevSvg onClick={() => { dispatch(prevTrack({ arreyAllTracks, currentTrack })) }} alt="prev">
-                    <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-prev"></use>
                   </S.PlayerBtnPrevSvg>
                 </S.PlayerBtnPrev>
                 {isPlaying ?
@@ -124,33 +147,33 @@ const AudioPlayer = () => {
                     dispatch(getIsPlaying(true));
                   }}>
                     <S.PlayerBtnPlaySvg as="svg" alt="play">
-                      <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
+                      <use xlinkHref="/img/icon/sprite.svg#icon-play"></use>
                     </S.PlayerBtnPlaySvg>
                   </S.PlayerBtnPlay>
                 }
                 <S.PlayerBtnNext>
                   <S.PlayerBtnNextSvg onClick={() => { dispatch(nextTrack({ arreyAllTracks, currentTrack })) }
                   } alt="next">
-                    <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-next"></use>
                   </S.PlayerBtnNextSvg>
                 </S.PlayerBtnNext>
                 {isRepeat ?
                   <S.PlayerBtnRepeat onClick={handleRepeat}>
                     <S.PlayerBtnRepeatActiveSvg alt="repeat">
-                      <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
+                      <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>
                     </S.PlayerBtnRepeatActiveSvg>
                   </S.PlayerBtnRepeat>
 
                   :
                   <S.PlayerBtnRepeat onClick={handleRepeat}>
                     <S.PlayerBtnRepeatSvg alt="repeat">
-                      <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
+                      <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>
                     </S.PlayerBtnRepeatSvg>
                   </S.PlayerBtnRepeat>
                 }
                 <S.PlayerBtnShuffle onClick={() => { dispatch(getShuffle(!shuffle)) }}>
                   <S.PlayerBtnShuffleSvg alt="shuffle" $stroke={shuffle} >
-                    <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-shuffle"></use>
                   </S.PlayerBtnShuffleSvg>
                 </S.PlayerBtnShuffle>
               </S.PlayerControls>
@@ -161,7 +184,7 @@ const AudioPlayer = () => {
                   <S.TrackPlayContain>
                     <S.TrackPlayImage>
                       <S.TrackPlaySvg alt="music">
-                        <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+                        <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
                       </S.TrackPlaySvg>
                     </S.TrackPlayImage>
                     <S.TrackPlayAuthor>
@@ -177,28 +200,37 @@ const AudioPlayer = () => {
                   </S.TrackPlayContain>}
 
                 <S.TrackPlayLikeDis>
-                  <S.TrackPlayLike onClick={awaitImplementation}>
-                    <S.TrackPlayLikeSvg alt="like">
-                      <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                    </S.TrackPlayLikeSvg>
-                  </S.TrackPlayLike>
-                  <S.TrackPlayDislike onClick={awaitImplementation}>
-                    <S.TrackPlayDislikeSvg alt="dislike">
-                      <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
-                    </S.TrackPlayDislikeSvg>
-                  </S.TrackPlayDislike>
+                  {
+                    activeLike({ data }) || currentPage === 'favorites' ?
+                      <S.TrackTimeSvgLike onClick={
+                        () => { 
+                          setDisLike(currentTrack.id);
+                           }} alt="time">
+                        <use xlinkHref="/img/icon/sprite.svg#icon-like" />
+                      </S.TrackTimeSvgLike>
+                      :
+                      <S.TrackTimeSvg onClick={() => { setLike(currentTrack.id) }} alt="time">
+                        <use xlinkHref="/img/icon/sprite.svg#icon-like" />
+                      </S.TrackTimeSvg>
+                  }
+
+
+
                 </S.TrackPlayLikeDis>
+
+
+
               </S.PlayerTrackPlay>
             </S.BarPlayer>
             <S.BarVolumeBlock>
               <S.VolumeContent>
                 <S.VolumeImage>
                   <S.VolumeSvg alt="volume">
-                    <use xlinkHref="img/icon/sprite.svg#icon-volume"></use>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-volume"></use>
                   </S.VolumeSvg>
                 </S.VolumeImage>
                 <S.VolumeProgress>
-                  <ProgressInputVolume ref={aRef} />
+                  <ProgresInputVolume ref={aRef} />
                 </S.VolumeProgress>
               </S.VolumeContent>
             </S.BarVolumeBlock>

@@ -16,7 +16,7 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions)
-  console.log(result)
+  // console.log(result)
   if (result.error && result.error.status === 401) {
     const refreshResult = await api.dispatch(getFreshToken())
     if (refreshResult.data) {
@@ -35,9 +35,20 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 export const tracksApi = createApi({
 
   reducerPath: "tracksApi",
-  tagTypes: ["Favorites", 'AllTracks'],
+  tagTypes: ["Favorites", 'AllTracks', "Track"],
   baseQuery: baseQueryWithReauth,
   endpoints: (build) => ({
+    getTrack: build.query({
+      query: (id) => ({
+        url: `/catalog/track/${id}/`
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+            { type: 'Track', id: 'LIST' },
+          ]
+          : [{ type: 'Track', id: 'LIST' }],
+    }),
     getAllTracks: build.query({
       query: () => '/catalog/track/all/',
       providesTags: (result) =>
@@ -47,6 +58,16 @@ export const tracksApi = createApi({
             { type: 'AllTracks', id: 'LIST' },
           ]
           : [{ type: 'AllTracks', id: 'LIST' }],
+    }),
+    getCategoryTracks: build.query({
+      query: () => '/catalog/selection/',
+      providesTags: (result) =>
+        result
+          ? [
+            ...result.map(({ id }) => ({ type: 'Category', id })),
+            { type: 'Category', id: 'LIST' },
+          ]
+          : [{ type: 'Category', id: 'LIST' }],
     }),
     getFavoritesTracks: build.query({
       query: () => '/catalog/track/favorite/all/',
@@ -65,7 +86,9 @@ export const tracksApi = createApi({
       }),
       invalidatesTags: [
         { type: 'Favorites', id: 'LIST' },
-        { type: 'AllTracks', id: 'LIST' }
+        { type: 'AllTracks', id: 'LIST' },
+        { type: 'Category', id: 'LIST' },
+        { type: 'Track', id: 'LIST' }
       ]
     }),
     setDisLike: build.mutation({
@@ -75,11 +98,14 @@ export const tracksApi = createApi({
       }),
       invalidatesTags: [
         { type: 'Favorites', id: 'LIST' },
-        { type: 'AllTracks', id: 'LIST' }
+        { type: 'AllTracks', id: 'LIST' },
+        { type: 'Category', id: 'LIST' },
+        { type: 'Track', id: 'LIST' }
+
       ]
     }),
 
   }),
 })
 
-export const { useGetAllTracksQuery, useGetFavoritesTracksQuery, useSetLikeMutation, useSetDisLikeMutation } = tracksApi
+export const { useGetAllTracksQuery, useGetTrackQuery, useGetFavoritesTracksQuery, useSetLikeMutation, useSetDisLikeMutation, useGetCategoryTracksQuery } = tracksApi
