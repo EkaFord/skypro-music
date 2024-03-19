@@ -1,22 +1,24 @@
-import React, { useEffect } from "react";
-import { useContext } from 'react';
-import Context from '../../contexts';
-import * as S from "./MyPlayListStyles"
-import TracksBlock from "../../components/TracksBlock/TracksBlock";
+import React, { useEffect, useContext } from "react";
 import { useDispatch } from "react-redux";
+import Context from '../../contexts';
+import * as S from "./MyPlayListStyles";
+import TracksBlock from "../../components/TracksBlock/TracksBlock";
 import { useGetFavoritesTracksQuery } from "../../query/tracks";
 import { getFavoriteTracks, getCurrentPage } from "../../store/slices/track";
 
 export const MyPlaylist = () => {
   const dispatch = useDispatch();
-
-  dispatch(getCurrentPage('favorites'))
-
-  const { setIsMainPage } = useContext(Context)
-  setIsMainPage(false);
-
+  const { setIsMainPage } = useContext(Context);
   const { data, isLoading } = useGetFavoritesTracksQuery();
-  dispatch(getFavoriteTracks(data))
+
+  useEffect(() => {
+    dispatch(getCurrentPage('favorites'));
+    setIsMainPage(false);
+
+    if(data) {
+      dispatch(getFavoriteTracks(data));
+    }
+  }, [data, dispatch, setIsMainPage]);
 
   return (
     <div>
@@ -25,4 +27,3 @@ export const MyPlaylist = () => {
     </div>
   );
 };
-
