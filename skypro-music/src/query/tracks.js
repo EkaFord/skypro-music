@@ -35,20 +35,9 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 export const tracksApi = createApi({
 
   reducerPath: "tracksApi",
-  tagTypes: ["Favorites", 'AllTracks', "Track"],
+  tagTypes: ["Favorites", 'AllTracks'],
   baseQuery: baseQueryWithReauth,
   endpoints: (build) => ({
-    getTrack: build.query({
-      query: (id) => ({
-        url: `/catalog/track/${id}/`
-      }),
-      providesTags: (result) =>
-        result
-          ? [
-            { type: 'Track', id: 'LIST' },
-          ]
-          : [{ type: 'Track', id: 'LIST' }],
-    }),
     getAllTracks: build.query({
       query: () => '/catalog/track/all/',
       providesTags: (result) =>
@@ -87,8 +76,7 @@ export const tracksApi = createApi({
       invalidatesTags: [
         { type: 'Favorites', id: 'LIST' },
         { type: 'AllTracks', id: 'LIST' },
-        { type: 'Category', id: 'LIST' },
-        { type: 'Track', id: 'LIST' }
+        { type: 'Category', id: 'LIST' }
       ]
     }),
     setDisLike: build.mutation({
@@ -99,9 +87,7 @@ export const tracksApi = createApi({
       invalidatesTags: [
         { type: 'Favorites', id: 'LIST' },
         { type: 'AllTracks', id: 'LIST' },
-        { type: 'Category', id: 'LIST' },
-        { type: 'Track', id: 'LIST' }
-
+        { type: 'Category', id: 'LIST' }
       ]
     }),
 

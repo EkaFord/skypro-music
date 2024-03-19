@@ -1,12 +1,9 @@
 import React from "react";
 import * as S from "./PlayListStyles"
 import { playLists } from "../../PlayListsAll.js"
-import { useDispatch } from "react-redux";
-import { getFilterOff } from "../../store/slices/track.js";
 
 
 const PlayList = () => {
-  const dispatch = useDispatch();
 
   return (
     <>
@@ -14,7 +11,7 @@ const PlayList = () => {
 
         {playLists.map((playLista) => (
           <S.SidebarItem key={playLista.id}>
-            <S.SidebarLink to={`/category/${playLista.id}`} onClick={()=>{dispatch(getFilterOff())}}>
+            <S.SidebarLink to={`/category/${playLista.id}`}>
               <S.SidebarImg
                 src={playLista.src}
                 alt={playLista.name}
