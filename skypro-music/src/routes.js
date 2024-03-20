@@ -8,6 +8,7 @@ import { Error } from "./pages/error/error.jsx";
 import { ProtectedRoute } from "./pages/ProtectedRoute.jsx";
 import { useContext, useEffect} from 'react';
 import Context from "./contexts.jsx";
+import MyTrackList from "./components/TrackList/MyTrackList.jsx";
 
 
 export const AppRoutes = () => {
@@ -29,7 +30,10 @@ export const AppRoutes = () => {
       <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
         <Route path="/MyPlaylist" element={<MyPlaylist />} />
         <Route path="/category/:id" element={<Category />} />
+        <Route path="/MyTrackList" element={<MyTrackList />} />
         <Route path="/" element={<Main />} />
+        
+        
 
       </Route>
 

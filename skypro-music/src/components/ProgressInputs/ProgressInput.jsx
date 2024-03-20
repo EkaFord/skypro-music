@@ -1,31 +1,42 @@
 import React from "react";
 import * as S from "./ProgressInputStyles"
 import { forwardRef } from 'react';
+import  { useEffect, useState } from 'react'
 
-export const ProgressInputTrack = forwardRef((props, ref) => {
-  const duration = ref.current && !isNaN(ref.current.duration) ? ref.current.duration : 0;
-  const currentTime = ref.current && !isNaN(ref.current.currentTime) ? ref.current.currentTime : 0;
+
+export const ProgresInputTrack = forwardRef((props, aRef) => {
+
+  const [currentTime, setCurrentTime] = useState(0)
+
+  const handleCurrentTime = (value) => {
+    setCurrentTime(value)
+    aRef.current.currentTime = value
+  }
+
+  useEffect(() => {
+    
+    setCurrentTime(aRef.current.currentTime)
+  }, [aRef.current.currentTime])
 
   return (
     <S.ProgressInput
       type="range"
       min={0}
-      max={duration}
+      max={aRef.current.duration ? aRef.current.duration : 0}
       value={currentTime}
       step={0.01}
-      onChange={(event) => {
-        const newTime = parseFloat(event.target.value);
-        if (!isNaN(newTime)) {
-          ref.current.currentTime = newTime;
-        }
-      }}
+      onChange={(e) => handleCurrentTime(e.target.value)}
     />
-  );
+  )
 });
 
-export const ProgressInputVolume = forwardRef((props, ref) => {
-  const volume = ref.current ? ref.current.volume : 0;
+export const ProgresInputVolume = forwardRef((props, aRef) => {
 
+  const [volume, setVolume] = useState(0.5)
+  const handleVolume = (value) => {
+    setVolume(value)
+    aRef.current.volume = value
+  }
   return (
     <S.ProgressInput
       type="range"
@@ -33,12 +44,6 @@ export const ProgressInputVolume = forwardRef((props, ref) => {
       max={1}
       value={volume}
       step={0.01}
-      onChange={(event) => {
-        const newVolume = parseFloat(event.target.value);
-        if (ref.current && !isNaN(newVolume)) {
-          ref.current.volume = newVolume;
-        }
-      }}
-    />
-  );
+      onChange={(e) => handleVolume(e.target.value)}
+    />)
 });

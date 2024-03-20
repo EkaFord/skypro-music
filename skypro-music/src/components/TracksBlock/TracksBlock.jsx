@@ -3,7 +3,7 @@ import Track from "../Track/Track";
 import * as S from "./TracksBlockStyles"
 
 
-const TracksBlock = () => {
+const TracksBlock = ({isLoading}) => {
 
 
   return (
@@ -19,7 +19,7 @@ const TracksBlock = () => {
         </S.Col04>
       </S.ContentTitle>
       <S.ContentPlaylist>
-        <Track/>
+        <Track isLoadingM={isLoading}/>
       </S.ContentPlaylist>
     </S.CenterblockContent>
   );

@@ -1,25 +1,27 @@
 import React from "react";
-import * as S from "./PlayListStyles";
-import LoadingContext from "../../context";
-import { useContext } from "react";
-import { playLists } from "../../PlayListsAll.js";
+import * as S from "./PlayListStyles"
+import { playLists } from "../../PlayListsAll.js"
+
 
 const PlayList = () => {
-  const { loading, setLoading } = useContext(LoadingContext);
 
   return (
     <>
-      {playLists.map((playLista) =>
-        loading ? (
-          <S.SidebarItemSkeleton key={playLista.id}></S.SidebarItemSkeleton>
-        ) : (
+      <S.SidebarList>
+
+        {playLists.map((playLista) => (
           <S.SidebarItem key={playLista.id}>
             <S.SidebarLink to={`/category/${playLista.id}`}>
-              <S.SidebarImg src={playLista.src} alt={playLista.name} />
+              <S.SidebarImg
+                src={playLista.src}
+                alt={playLista.name}
+              />
             </S.SidebarLink>
           </S.SidebarItem>
-        )
-      )}
+
+        ))}
+      </S.SidebarList>
+
     </>
   );
 };

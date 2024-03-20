@@ -1,19 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import * as S from "./LoginStyles.js"
 import { useEffect, useState, useContext } from "react";
 import { getAuthorization, getLogin, getToken } from "../../api.js";
 import Context from "../../contexts.jsx";
+import { currentUserToken, currentUser } from "../../store/slices/user.js";
+import { useDispatch } from "react-redux";
 
 
 export function Login() {
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
 
+  const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [loading, setLoading] = useState(false);
-  const { addLogin } = useContext(Context)
+  const { addLogin, setUser } = useContext(Context)
 
   const changeForm = (isLoginMode) => {
     setIsLoginMode(!isLoginMode)
@@ -21,10 +24,11 @@ export function Login() {
     setPassword("")
     setRepeatPassword("")
   }
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
-    setLoading(true)
 
+    setLoading(true)
     if (email === "") {
       setError("Не заполнен Email");
       return
@@ -40,16 +44,23 @@ export function Login() {
           setLoading(false)
           return
         }
+        setUser(user)
+        addLogin(email)
+        dispatch(currentUser({ user }))
+        localStorage.setItem('id', user.id);
+
         getToken({ email, password })
           .then((token) => {
             console.log(token)
-            addLogin("email")
-            window.location.href = '/'
-            // localStorage.setItem('login', user.email);
+            localStorage.setItem('token', token.refresh);
+
+            dispatch(currentUserToken(token))
           })
+        navigate("/");
+
       })
       .catch((error) => {
-        setError(error.message)
+        setError(error)
       }).finally(() => {
         setLoading(false)
       })

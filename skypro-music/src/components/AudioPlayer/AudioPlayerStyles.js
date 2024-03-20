@@ -160,6 +160,7 @@ export const TrackPlayLikeDis = styled.div`
   flex-direction: row;
   align-items: center;
   margin-left: 26%;
+  display: none;
 `
 
 
@@ -281,3 +282,16 @@ export const TimeCode = styled.div`
     text-align: end;
     margin: 10px 50px 10px;
 `
+
+export const TrackTimeSvgLike = styled.svg`
+  width: 14px;
+  height: 12px;
+  fill: transparent;
+  stroke: #696969;
+  cursor: pointer;
+  // Add any hover effects or additional styling here
+`;
+
+export const TrackTimeSvg = styled(TrackTimeSvgLike)`
+  
+`;

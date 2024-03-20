@@ -1,14 +1,29 @@
 import React from "react";
-import PlayList from "../PlayList/PlayList";
-import * as S from '../PlayList/PlayListStyles'
+import * as S from "./PlayListStyles"
+import { playLists } from "../../PlayListsAll.js"
 
-const PlayLists = () => {
+
+const PlayList = () => {
 
   return (
-    <S.SidebarList>
-        <PlayList />
-    </S.SidebarList>
+    <>
+      <S.SidebarList>
+
+        {playLists.map((playLista) => (
+          <S.SidebarItem key={playLista.id}>
+            <S.SidebarLink to={`/category/${playLista.id}`}>
+              <S.SidebarImg
+                src={playLista.src}
+                alt={playLista.name}
+              />
+            </S.SidebarLink>
+          </S.SidebarItem>
+
+        ))}
+      </S.SidebarList>
+
+    </>
   );
 };
 
-export default PlayLists;
+export default PlayList;

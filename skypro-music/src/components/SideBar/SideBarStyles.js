@@ -33,7 +33,7 @@ export const SidebarIcon = styled(Link)`
 export const SidebarBlock = styled.div`
   height: 100%;
   padding: 240px 0 0 0;
-  display: flex;
+  display: ${(props) => (props.$display ? 'flex' : 'none')};
   flex-direction: column;
   justify-content: flex-start;
 `
