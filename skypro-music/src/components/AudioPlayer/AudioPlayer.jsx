@@ -25,7 +25,7 @@ const AudioPlayer = () => {
   const [currentTime, setCurrentTime] = useState('00:00');
   const [duration, setDuration] = useState('00:00');
 
-  // Define handleStart and handleStop outside of useEffect
+  
   const handleStart = () => {
     aRef.current.play();
     setPlaying(true);
@@ -37,7 +37,7 @@ const AudioPlayer = () => {
   };
 
   useEffect(() => {
-    handleStart(); // Now this call works because handleStart is in the correct scope
+    handleStart(); 
   }, [currentTrack]);
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const AudioPlayer = () => {
 
   const activeLike = (data) => {
     if (data && (currentPage === 'main' || currentPage === 'category')) {
-      const userId = localStorage.getItem('id'); // Consider converting to a number if necessary
+      const userId = localStorage.getItem('id'); 
       const like = data.stared_user.find((user) => user.id.toString() === userId);
       return !!like;
     }

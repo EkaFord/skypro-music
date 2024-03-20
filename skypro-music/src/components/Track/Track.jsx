@@ -123,12 +123,12 @@ const Track = ({ isLoadingM }) => {
     return m.padStart(2, 0) + ':' + s.padStart(2, 0)
   }
 
-  // console.log(arreyAllTracks)
+  
 
   const activeLike = ({ track }) => {
     if (currentPage === 'main' || currentPage === 'category') {
       const ollUsersLikes = track.stared_user
-      const userId = localStorage.getItem('id'); //Надо преобразовать в число
+      const userId = localStorage.getItem('id'); 
       const like = ollUsersLikes.find(user => user.id == userId)
       if (like) {
         // console.log(true)
